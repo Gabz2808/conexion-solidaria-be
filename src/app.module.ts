@@ -6,6 +6,21 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { config, cwd } from 'process';
 import { join } from 'path';
 import { UsuariosModule } from './usuarios/usuarios.module';
+import { CategoriaModule } from './categoria/categoria.module';
+import { AmigosModule } from './amigos/amigos.module';
+import { ChatsModule } from './chats/chats.module';
+import { ComentariosModule } from './comentarios/comentarios.module';
+import { FavoritosModule } from './favoritos/favoritos.module';
+import { GruposModule } from './grupos/grupos.module';
+import { HistoriasModule } from './historias/historias.module';
+import { LikesModule } from './likes/likes.module';
+import { MensajesprivadosModule } from './mensajesprivados/mensajesprivados.module';
+import { MiembrosgrupoModule } from './miembrosgrupo/miembrosgrupo.module';
+import { NotificacionesModule } from './notificaciones/notificaciones.module';
+import { PerfilusuarioModule } from './perfilusuario/perfilusuario.module';
+import { PostsModule } from './posts/posts.module';
+import { ProductoModule } from './producto/producto.module';
+import { ProductoguardadoModule } from './productoguardado/productoguardado.module';
 
 @Module({
   imports: [
@@ -23,7 +38,7 @@ import { UsuariosModule } from './usuarios/usuarios.module';
         entities: [join(process.cwd(), 'dist/**/*.entity.js')],
         synchronize: true,
       })
-    }), UsuariosModule,
+    }), UsuariosModule, CategoriaModule, AmigosModule, ChatsModule, ComentariosModule, FavoritosModule, GruposModule, HistoriasModule, LikesModule, MensajesprivadosModule, MiembrosgrupoModule, NotificacionesModule, PerfilusuarioModule, PostsModule, ProductoModule, ProductoguardadoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
