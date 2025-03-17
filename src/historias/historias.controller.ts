@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { HistoriasService } from './historias.service';
 import { CreateHistoriaDto } from './dto/create-historia.dto';
 import { UpdateHistoriaDto } from './dto/update-historia.dto';
@@ -17,18 +17,23 @@ export class HistoriasController {
     return this.historiasService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+@Get(':idhistoria')
+  findOne(@Param('idhistoria') id: string) {
     return this.historiasService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHistoriaDto: UpdateHistoriaDto) {
+  @Patch(':idhistoria')
+  update(@Param('idhistoria') id: string, @Body() updateHistoriaDto: UpdateHistoriaDto) {
     return this.historiasService.update(+id, updateHistoriaDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(':idhistoria')
+  remove(@Param('idhistoria') id: string) {
     return this.historiasService.remove(+id);
+  }
+
+  @Put(':idhistoria')
+  replace(@Param('idhistoria') id: string, @Body() updateHistoriaDto: UpdateHistoriaDto) {
+    return this.historiasService.update(+id, updateHistoriaDto);
   }
 }

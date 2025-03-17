@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { NotificacionesService } from './notificaciones.service';
 import { CreateNotificacioneDto } from './dto/create-notificacione.dto';
 import { UpdateNotificacioneDto } from './dto/update-notificacione.dto';
@@ -17,18 +17,23 @@ export class NotificacionesController {
     return this.notificacionesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+@Get(':idnotificacione')
+  findOne(@Param('idnotificacione') id: string) {
     return this.notificacionesService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNotificacioneDto: UpdateNotificacioneDto) {
+  @Patch(':idnotificacione')
+  update(@Param('idnotificacione') id: string, @Body() updateNotificacioneDto: UpdateNotificacioneDto) {
     return this.notificacionesService.update(+id, updateNotificacioneDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(':idnotificacione')
+  remove(@Param('idnotificacione') id: string) {
     return this.notificacionesService.remove(+id);
+  }
+
+  @Put(':idnotificacione')
+  replace(@Param('idnotificacione') id: string, @Body() updateNotificacioneDto: UpdateNotificacioneDto) {
+    return this.notificacionesService.update(+id, updateNotificacioneDto);
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { AmigosService } from './amigos.service';
 import { CreateAmigoDto } from './dto/create-amigo.dto';
 import { UpdateAmigoDto } from './dto/update-amigo.dto';
@@ -17,18 +17,23 @@ export class AmigosController {
     return this.amigosService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Get(':idamigo')
+  findOne(@Param('idamigo') id: string) {
     return this.amigosService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAmigoDto: UpdateAmigoDto) {
+  @Patch(':idamigo')
+  update(@Param('idamigo') id: string, @Body() updateAmigoDto: UpdateAmigoDto) {
     return this.amigosService.update(+id, updateAmigoDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(':idamigo')
+  remove(@Param('idamigo') id: string) {
     return this.amigosService.remove(+id);
+  }
+
+  @Put(':idamigo') // Agregado el método PUT
+  replace(@Param('idamigo') id: string, @Body() updateAmigoDto: UpdateAmigoDto) {
+    return this.amigosService.update(+id, updateAmigoDto);
   }
 }

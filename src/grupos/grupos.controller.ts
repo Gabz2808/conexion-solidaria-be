@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { GruposService } from './grupos.service';
 import { CreateGrupoDto } from './dto/create-grupo.dto';
 import { UpdateGrupoDto } from './dto/update-grupo.dto';
@@ -17,18 +17,23 @@ export class GruposController {
     return this.gruposService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+@Get(':idgrupo')
+  findOne(@Param('idgrupo') id: string) {
     return this.gruposService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGrupoDto: UpdateGrupoDto) {
+  @Patch(':idgrupo')
+  update(@Param('idgrupo') id: string, @Body() updateGrupoDto: UpdateGrupoDto) {
     return this.gruposService.update(+id, updateGrupoDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(':idgrupo')
+  remove(@Param('idgrupo') id: string) {
     return this.gruposService.remove(+id);
+  }
+
+  @Put(':idgrupo')
+  replace(@Param('idgrupo') id: string, @Body() updateGrupoDto: UpdateGrupoDto) {
+    return this.gruposService.update(+id, updateGrupoDto);
   }
 }

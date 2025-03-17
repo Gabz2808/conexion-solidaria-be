@@ -1,26 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import { CreateHistoriaDto } from './dto/create-historia.dto';
 import { UpdateHistoriaDto } from './dto/update-historia.dto';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { NotFoundException } from '@nestjs/common';
+import { Historia } from './entities/historia.entity';
 
 @Injectable()
 export class HistoriasService {
-  create(createHistoriaDto: CreateHistoriaDto) {
-    return 'This action adds a new historia';
+  constructor(
+    @InjectRepository(Historia)
+    private readonly historiasRepository: Repository<Historia>  ) {}
+  async create(createHistoriaDto: CreateHistoriaDto) {
+    const historia = this.historiasRepository.create(createHistoriaDto);
+
+    return await this.historiasRepository.save(historia);
   }
 
-  findAll() {
-    return `This action returns all historias`;
+  async findAll() {
+    return  await this.historiasRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} historia`;
+  
+  async findOne(idhistoria: number) {
+    return await this.historiasRepository.findOne({ where: { idhistoria } });
   }
 
-  update(id: number, updateHistoriaDto: UpdateHistoriaDto) {
-    return `This action updates a #${id} historia`;
+  async update(id: number, updateHistoriaDto: UpdateHistoriaDto) {
+    const historia = await this.findOne(id);
+    if (!historia) {
+      throw new NotFoundException('Historia not found');
+    }
+    Object.assign(historia, updateHistoriaDto);
+    return await this.historiasRepository.save(historia);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} historia`;
+  async remove(id: number) {
+    const historia = await this.findOne(id);
+    if (!historia) {
+      throw new NotFoundException('Historia not found');
+    }
+
+    return await this.historiasRepository.remove(historia);
   }
 }

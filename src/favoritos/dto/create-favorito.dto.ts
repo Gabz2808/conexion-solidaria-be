@@ -1,7 +1,7 @@
 export class CreateFavoritoDto {
   idfavorito: number;
   tipo: string;
-  idrelacion: string;
+  idrelacion: number;
   idusuario: number;
   fechaguardado: Date;
 }

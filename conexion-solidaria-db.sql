@@ -27,10 +27,10 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.amigos (
     idamigo integer NOT NULL,
-    idusuario1 integer,
-    idusuario2 integer,
-    estado character varying(50),
-    fechasolicitud timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    idusuario1 integer NOT NULL,
+    idusuario2 integer NOT NULL,
+    fechasolicitud timestamp without time zone NOT NULL,
+    estado text NOT NULL
 );
 
 
@@ -59,22 +59,22 @@ ALTER SEQUENCE public.amigos_idamigo_seq OWNED BY public.amigos.idamigo;
 
 
 --
--- Name: categoria; Type: TABLE; Schema: public; Owner: postgres
+-- Name: categorias; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.categoria (
+CREATE TABLE public.categorias (
     idcategoria integer NOT NULL,
-    nombre character varying(100)
+    nombre text NOT NULL
 );
 
 
-ALTER TABLE public.categoria OWNER TO postgres;
+ALTER TABLE public.categorias OWNER TO postgres;
 
 --
--- Name: categoria_idcategoria_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: categorias_idcategoria_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.categoria_idcategoria_seq
+CREATE SEQUENCE public.categorias_idcategoria_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -83,13 +83,13 @@ CREATE SEQUENCE public.categoria_idcategoria_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.categoria_idcategoria_seq OWNER TO postgres;
+ALTER SEQUENCE public.categorias_idcategoria_seq OWNER TO postgres;
 
 --
--- Name: categoria_idcategoria_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: categorias_idcategoria_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.categoria_idcategoria_seq OWNED BY public.categoria.idcategoria;
+ALTER SEQUENCE public.categorias_idcategoria_seq OWNED BY public.categorias.idcategoria;
 
 
 --
@@ -98,9 +98,9 @@ ALTER SEQUENCE public.categoria_idcategoria_seq OWNED BY public.categoria.idcate
 
 CREATE TABLE public.chats (
     idchat integer NOT NULL,
-    idusuario1 integer,
-    idusuario2 integer,
-    fechacreacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    idusuario1 integer NOT NULL,
+    idusuario2 integer NOT NULL,
+    fechacreacion timestamp without time zone NOT NULL
 );
 
 
@@ -136,9 +136,9 @@ CREATE TABLE public.comentarios (
     idcomentario integer NOT NULL,
     idpost integer,
     idhistoria integer,
-    idusuario integer,
-    contenido text,
-    fechacreacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    idusuario integer NOT NULL,
+    contenido text NOT NULL,
+    fechacreacion timestamp without time zone NOT NULL
 );
 
 
@@ -172,10 +172,10 @@ ALTER SEQUENCE public.comentarios_idcomentario_seq OWNED BY public.comentarios.i
 
 CREATE TABLE public.favoritos (
     idfavorito integer NOT NULL,
-    tipo character varying(50),
-    idrelacion character varying(255),
-    idusuario integer,
-    fechaguardado timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    idrelacion integer NOT NULL,
+    idusuario integer NOT NULL,
+    fechaguardado timestamp without time zone NOT NULL,
+    tipo text NOT NULL
 );
 
 
@@ -210,10 +210,10 @@ ALTER SEQUENCE public.favoritos_idfavorito_seq OWNED BY public.favoritos.idfavor
 CREATE TABLE public.grupos (
     idgrupo integer NOT NULL,
     nombre character varying(255) NOT NULL,
-    descripcion text,
-    idusuario integer,
-    fechacreacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    imagen text
+    descripcion text NOT NULL,
+    idusuario integer NOT NULL,
+    fechacreacion timestamp without time zone NOT NULL,
+    imagen text NOT NULL
 );
 
 
@@ -247,12 +247,11 @@ ALTER SEQUENCE public.grupos_idgrupo_seq OWNED BY public.grupos.idgrupo;
 
 CREATE TABLE public.historias (
     idhistoria integer NOT NULL,
-    titulo character varying(255),
-    contenido text,
-    idusuario integer,
-    fechacreacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    estado character varying(50),
-    imagen text
+    titulo character varying(255) NOT NULL,
+    contenido text NOT NULL,
+    idusuario integer NOT NULL,
+    fechacreacion timestamp without time zone NOT NULL,
+    imagen text NOT NULL
 );
 
 
@@ -286,9 +285,9 @@ ALTER SEQUENCE public.historias_idhistoria_seq OWNED BY public.historias.idhisto
 
 CREATE TABLE public.likes (
     idlike integer NOT NULL,
-    idrelacion character varying(255),
-    idusuario integer,
-    fechacreacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    idrelacion integer NOT NULL,
+    idusuario integer NOT NULL,
+    fechacreacion timestamp without time zone NOT NULL
 );
 
 
@@ -322,10 +321,10 @@ ALTER SEQUENCE public.likes_idlike_seq OWNED BY public.likes.idlike;
 
 CREATE TABLE public.mensajesprivados (
     idmprivado integer NOT NULL,
-    idchat integer,
-    idusuario integer,
-    contenido text,
-    fechacreacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    idchat integer NOT NULL,
+    idusuario integer NOT NULL,
+    contenido text NOT NULL,
+    fechacreacion timestamp without time zone NOT NULL
 );
 
 
@@ -359,10 +358,10 @@ ALTER SEQUENCE public.mensajesprivados_idmprivado_seq OWNED BY public.mensajespr
 
 CREATE TABLE public.miembrosgrupo (
     idmiembro integer NOT NULL,
-    idgrupo integer,
-    idusuario integer,
-    rol character varying(50) DEFAULT 'miembro'::character varying,
-    fechacreacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    idgrupo integer NOT NULL,
+    idusuario integer NOT NULL,
+    rol character varying(50) NOT NULL,
+    fechacreacion timestamp without time zone NOT NULL
 );
 
 
@@ -396,10 +395,10 @@ ALTER SEQUENCE public.miembrosgrupo_idmiembro_seq OWNED BY public.miembrosgrupo.
 
 CREATE TABLE public.notificaciones (
     idnotificaciones integer NOT NULL,
-    idusuario integer,
-    contenido text,
-    leido boolean DEFAULT false,
-    fechacreacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    idusuario integer NOT NULL,
+    contenido text NOT NULL,
+    leido boolean NOT NULL,
+    fechacreacion timestamp without time zone NOT NULL
 );
 
 
@@ -433,11 +432,11 @@ ALTER SEQUENCE public.notificaciones_idnotificaciones_seq OWNED BY public.notifi
 
 CREATE TABLE public.perfilusuario (
     idperfilusuario integer NOT NULL,
-    idusuario integer,
-    direccion text,
-    telefono character varying(20),
-    urlusuario text,
-    biografia text
+    idusuario integer NOT NULL,
+    direccion text NOT NULL,
+    telefono character varying(20) NOT NULL,
+    urlusuario text NOT NULL,
+    biografia text NOT NULL
 );
 
 
@@ -471,11 +470,11 @@ ALTER SEQUENCE public.perfilusuario_idperfilusuario_seq OWNED BY public.perfilus
 
 CREATE TABLE public.posts (
     idposts integer NOT NULL,
-    titulo character varying(255),
-    contenido text,
-    idusuario integer,
-    fechacreacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    imagen text
+    titulo character varying(255) NOT NULL,
+    contenido text NOT NULL,
+    idusuario integer NOT NULL,
+    fechacreacion timestamp without time zone NOT NULL,
+    imagen text NOT NULL
 );
 
 
@@ -504,22 +503,22 @@ ALTER SEQUENCE public.posts_idposts_seq OWNED BY public.posts.idposts;
 
 
 --
--- Name: producto; Type: TABLE; Schema: public; Owner: postgres
+-- Name: productos; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.producto (
+CREATE TABLE public.productos (
     idproducto integer NOT NULL,
-    nombre character varying(255),
-    descripcion text,
-    precio numeric(10,2),
-    idcategoria integer,
-    imagen text,
-    idusuario integer,
-    fechacreacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    nombre character varying(255) NOT NULL,
+    descripcion text NOT NULL,
+    precio numeric(10,2) NOT NULL,
+    idcategoria integer NOT NULL,
+    imagen text NOT NULL,
+    idusuario integer NOT NULL,
+    fechacreacion timestamp without time zone NOT NULL
 );
 
 
-ALTER TABLE public.producto OWNER TO postgres;
+ALTER TABLE public.productos OWNER TO postgres;
 
 --
 -- Name: producto_idproducto_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -540,7 +539,7 @@ ALTER SEQUENCE public.producto_idproducto_seq OWNER TO postgres;
 -- Name: producto_idproducto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.producto_idproducto_seq OWNED BY public.producto.idproducto;
+ALTER SEQUENCE public.producto_idproducto_seq OWNED BY public.productos.idproducto;
 
 
 --
@@ -549,9 +548,9 @@ ALTER SEQUENCE public.producto_idproducto_seq OWNED BY public.producto.idproduct
 
 CREATE TABLE public.productoguardado (
     idpguardado integer NOT NULL,
-    idusuario integer,
-    productoid integer,
-    fechaguardado timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    idusuario integer NOT NULL,
+    idproducto integer NOT NULL,
+    fechaguardado timestamp without time zone NOT NULL
 );
 
 
@@ -580,22 +579,43 @@ ALTER SEQUENCE public.productoguardado_idpguardado_seq OWNED BY public.productog
 
 
 --
--- Name: usuario; Type: TABLE; Schema: public; Owner: postgres
+-- Name: productos_idproducto_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.usuario (
+CREATE SEQUENCE public.productos_idproducto_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.productos_idproducto_seq OWNER TO postgres;
+
+--
+-- Name: productos_idproducto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.productos_idproducto_seq OWNED BY public.productos.idproducto;
+
+
+--
+-- Name: usuarios; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usuarios (
     idusuario integer NOT NULL,
     nombre character varying(100) NOT NULL,
     apellido character varying(100) NOT NULL,
     email character varying(255) NOT NULL,
     password text NOT NULL,
-    fecharegistro timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    fecharegistro timestamp without time zone NOT NULL,
     rol character varying(50),
     estado character varying(50)
 );
 
 
-ALTER TABLE public.usuario OWNER TO postgres;
+ALTER TABLE public.usuarios OWNER TO postgres;
 
 --
 -- Name: usuario_idusuario_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -616,7 +636,47 @@ ALTER SEQUENCE public.usuario_idusuario_seq OWNER TO postgres;
 -- Name: usuario_idusuario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.usuario_idusuario_seq OWNED BY public.usuario.idusuario;
+ALTER SEQUENCE public.usuario_idusuario_seq OWNED BY public.usuarios.idusuario;
+
+
+--
+-- Name: usuario; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usuario (
+    idusuario integer DEFAULT nextval('public.usuario_idusuario_seq'::regclass) NOT NULL,
+    nombre character varying(100) NOT NULL,
+    apellido character varying(100) NOT NULL,
+    email character varying(255) NOT NULL,
+    password text NOT NULL,
+    fecharegistro timestamp without time zone NOT NULL,
+    rol character varying(50),
+    estado character varying(50)
+);
+
+
+ALTER TABLE public.usuario OWNER TO postgres;
+
+--
+-- Name: usuario_idusuario_seq1; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.usuario_idusuario_seq1
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.usuario_idusuario_seq1 OWNER TO postgres;
+
+--
+-- Name: usuario_idusuario_seq1; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.usuario_idusuario_seq1 OWNED BY public.usuario.idusuario;
 
 
 --
@@ -627,10 +687,10 @@ ALTER TABLE ONLY public.amigos ALTER COLUMN idamigo SET DEFAULT nextval('public.
 
 
 --
--- Name: categoria idcategoria; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: categorias idcategoria; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.categoria ALTER COLUMN idcategoria SET DEFAULT nextval('public.categoria_idcategoria_seq'::regclass);
+ALTER TABLE ONLY public.categorias ALTER COLUMN idcategoria SET DEFAULT nextval('public.categorias_idcategoria_seq'::regclass);
 
 
 --
@@ -711,13 +771,6 @@ ALTER TABLE ONLY public.posts ALTER COLUMN idposts SET DEFAULT nextval('public.p
 
 
 --
--- Name: producto idproducto; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.producto ALTER COLUMN idproducto SET DEFAULT nextval('public.producto_idproducto_seq'::regclass);
-
-
---
 -- Name: productoguardado idpguardado; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -725,35 +778,35 @@ ALTER TABLE ONLY public.productoguardado ALTER COLUMN idpguardado SET DEFAULT ne
 
 
 --
--- Name: usuario idusuario; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: usuarios idusuario; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.usuario ALTER COLUMN idusuario SET DEFAULT nextval('public.usuario_idusuario_seq'::regclass);
+ALTER TABLE ONLY public.usuarios ALTER COLUMN idusuario SET DEFAULT nextval('public.usuario_idusuario_seq'::regclass);
 
 
 --
 -- Data for Name: amigos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.amigos (idamigo, idusuario1, idusuario2, estado, fechasolicitud) FROM stdin;
-47	21	22	Pendiente	2025-03-16 10:35:40.332356
-48	25	22	Pendiente	2025-03-16 10:35:47.036427
-49	23	21	Pendiente	2025-03-16 10:35:51.637464
-50	24	25	Pendiente	2025-03-16 10:35:59.2896
-51	22	23	Pendiente	2025-03-16 10:36:09.344201
+COPY public.amigos (idamigo, idusuario1, idusuario2, fechasolicitud, estado) FROM stdin;
+48	25	22	2025-03-16 10:35:47.036427	Pendiente
+49	23	21	2025-03-16 10:35:51.637464	Pendiente
+47	23	22	2025-03-16 10:35:40.332356	ACEPTADO
 \.
 
 
 --
--- Data for Name: categoria; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: categorias; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.categoria (idcategoria, nombre) FROM stdin;
-21	Electrónica
-22	Ropa
-23	Libros
-24	Hogar
-25	Deportes
+COPY public.categorias (idcategoria, nombre) FROM stdin;
+1	Electrónica
+2	Ropa
+4	Hogar
+6	Electronica
+3	Electronicas
+8	Pruebaaa
+9	Pruebaaas
 \.
 
 
@@ -787,7 +840,7 @@ COPY public.comentarios (idcomentario, idpost, idhistoria, idusuario, contenido,
 -- Data for Name: favoritos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.favoritos (idfavorito, tipo, idrelacion, idusuario, fechaguardado) FROM stdin;
+COPY public.favoritos (idfavorito, idrelacion, idusuario, fechaguardado, tipo) FROM stdin;
 \.
 
 
@@ -796,16 +849,11 @@ COPY public.favoritos (idfavorito, tipo, idrelacion, idusuario, fechaguardado) F
 --
 
 COPY public.grupos (idgrupo, nombre, descripcion, idusuario, fechacreacion, imagen) FROM stdin;
-1	Amigos del barrio	Grupo para los vecinos del barrio	1	2025-03-16 10:24:17.924943	\N
-2	Club de lectura	Grupo para amantes de la lectura	2	2025-03-16 10:24:17.924943	\N
-3	Equipo de fútbol	Grupo para jugadores y aficionados	3	2025-03-16 10:24:17.924943	\N
-4	Desarrolladores web	Grupo para programadores web	4	2025-03-16 10:24:17.924943	\N
-5	Amigos de la universidad	Grupo para exalumnos de la universidad	5	2025-03-16 10:24:17.924943	\N
-6	Amigos del barrio	Grupo para los vecinos del barrio	1	2025-03-16 10:27:30.220546	\N
-7	Club de lectura	Grupo para amantes de la lectura	2	2025-03-16 10:27:30.220546	\N
-8	Equipo de fútbol	Grupo para jugadores y aficionados	3	2025-03-16 10:27:30.220546	\N
-9	Desarrolladores web	Grupo para programadores web	4	2025-03-16 10:27:30.220546	\N
-10	Amigos de la universidad	Grupo para exalumnos de la universidad	5	2025-03-16 10:27:30.220546	\N
+1	Amigos del barrio	Grupo para los vecinos del barrio	1	2025-03-16 10:24:17.924943	https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=600
+2	Club de lectura	Grupo para amantes de la lectura	2	2025-03-16 10:24:17.924943	https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=600
+3	Equipo de fútbol	Grupo para jugadores y aficionados	3	2025-03-16 10:24:17.924943	https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=600
+4	Desarrolladores web	Grupo para programadores web	4	2025-03-16 10:24:17.924943	https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=600
+5	Amigos de la universidad	Grupo para exalumnos de la universidad	5	2025-03-16 10:24:17.924943	https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=600
 \.
 
 
@@ -813,17 +861,18 @@ COPY public.grupos (idgrupo, nombre, descripcion, idusuario, fechacreacion, imag
 -- Data for Name: historias; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.historias (idhistoria, titulo, contenido, idusuario, fechacreacion, estado, imagen) FROM stdin;
-1	Mi viaje a la playa	Unas vacaciones increíbles en la costa	1	2025-03-16 10:24:28.237704	publicado	playa.jpg
-2	Nuevo libro favorito	Recomendación de una gran novela	2	2025-03-16 10:24:28.237704	publicado	libro2.jpg
-3	Partido de fútbol emocionante	Crónica de un encuentro deportivo	3	2025-03-16 10:24:28.237704	publicado	futbol.jpg
-4	Proyecto web terminado	Presentación de un nuevo sitio web	4	2025-03-16 10:24:28.237704	publicado	web.jpg
-5	Reencuentro con amigos	Un momento especial con viejos amigos	5	2025-03-16 10:24:28.237704	publicado	amigos.jpg
-6	Mi viaje a la playa	Unas vacaciones increíbles en la costa	1	2025-03-16 10:27:22.238885	publicado	playa.jpg
-7	Nuevo libro favorito	Recomendación de una gran novela	2	2025-03-16 10:27:22.238885	publicado	libro2.jpg
-8	Partido de fútbol emocionante	Crónica de un encuentro deportivo	3	2025-03-16 10:27:22.238885	publicado	futbol.jpg
-9	Proyecto web terminado	Presentación de un nuevo sitio web	4	2025-03-16 10:27:22.238885	publicado	web.jpg
-10	Reencuentro con amigos	Un momento especial con viejos amigos	5	2025-03-16 10:27:22.238885	publicado	amigos.jpg
+COPY public.historias (idhistoria, titulo, contenido, idusuario, fechacreacion, imagen) FROM stdin;
+1	Mi viaje a la playa	Unas vacaciones increíbles en la costa	1	2025-03-16 10:24:28.237704	playa.jpg
+2	Nuevo libro favorito	Recomendación de una gran novela	2	2025-03-16 10:24:28.237704	libro2.jpg
+3	Partido de fútbol emocionante	Crónica de un encuentro deportivo	3	2025-03-16 10:24:28.237704	futbol.jpg
+4	Proyecto web terminado	Presentación de un nuevo sitio web	4	2025-03-16 10:24:28.237704	web.jpg
+5	Reencuentro con amigos	Un momento especial con viejos amigos	5	2025-03-16 10:24:28.237704	amigos.jpg
+6	Mi viaje a la playa	Unas vacaciones increíbles en la costa	1	2025-03-16 10:27:22.238885	playa.jpg
+7	Nuevo libro favorito	Recomendación de una gran novela	2	2025-03-16 10:27:22.238885	libro2.jpg
+8	Partido de fútbol emocionante	Crónica de un encuentro deportivo	3	2025-03-16 10:27:22.238885	futbol.jpg
+9	Proyecto web terminado	Presentación de un nuevo sitio web	4	2025-03-16 10:27:22.238885	web.jpg
+10	Reencuentro con amigos	Un momento especial con viejos amigos	5	2025-03-16 10:27:22.238885	amigos.jpg
+11	Reencuentro con amigos	Un momento especial con viejos amigos	5	2025-03-16 10:27:22.238	amigos.jpg
 \.
 
 
@@ -909,10 +958,23 @@ COPY public.posts (idposts, titulo, contenido, idusuario, fechacreacion, imagen)
 
 
 --
--- Data for Name: producto; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: productoguardado; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.producto (idproducto, nombre, descripcion, precio, idcategoria, imagen, idusuario, fechacreacion) FROM stdin;
+COPY public.productoguardado (idpguardado, idusuario, idproducto, fechaguardado) FROM stdin;
+21	21	22	2025-03-16 10:28:02.915375
+22	22	21	2025-03-16 10:28:02.915375
+23	23	24	2025-03-16 10:28:02.915375
+24	24	23	2025-03-16 10:28:02.915375
+25	25	25	2025-03-16 10:28:02.915375
+\.
+
+
+--
+-- Data for Name: productos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.productos (idproducto, nombre, descripcion, precio, idcategoria, imagen, idusuario, fechacreacion) FROM stdin;
 21	Laptop Dell XPS 13	Ultrabook de 13 pulgadas	1200.00	1	laptop.jpg	1	2025-03-16 10:28:07.955981
 22	Camiseta Nike Dri-FIT	Camiseta deportiva para hombre	35.00	2	camiseta.jpg	2	2025-03-16 10:28:07.955981
 23	Libro "Cien años de soledad"	Novela de Gabriel García Márquez	20.00	3	libro.jpg	3	2025-03-16 10:28:07.955981
@@ -922,23 +984,18 @@ COPY public.producto (idproducto, nombre, descripcion, precio, idcategoria, imag
 
 
 --
--- Data for Name: productoguardado; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.productoguardado (idpguardado, idusuario, productoid, fechaguardado) FROM stdin;
-21	1	2	2025-03-16 10:28:02.915375
-22	2	1	2025-03-16 10:28:02.915375
-23	3	4	2025-03-16 10:28:02.915375
-24	4	3	2025-03-16 10:28:02.915375
-25	5	5	2025-03-16 10:28:02.915375
-\.
-
-
---
 -- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.usuario (idusuario, nombre, apellido, email, password, fecharegistro, rol, estado) FROM stdin;
+\.
+
+
+--
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.usuarios (idusuario, nombre, apellido, email, password, fecharegistro, rol, estado) FROM stdin;
 21	Juan	Pérez	juan.perez@example.com	password123	2025-03-16 10:28:39.458468	usuario	activo
 22	María	Gómez	maria.gomez@example.com	password456	2025-03-16 10:28:39.458468	usuario	activo
 23	Pedro	Rodríguez	pedro.rodriguez@example.com	password789	2025-03-16 10:28:39.458468	usuario	inactivo
@@ -951,28 +1008,28 @@ COPY public.usuario (idusuario, nombre, apellido, email, password, fecharegistro
 -- Name: amigos_idamigo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.amigos_idamigo_seq', 51, true);
+SELECT pg_catalog.setval('public.amigos_idamigo_seq', 52, true);
 
 
 --
--- Name: categoria_idcategoria_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: categorias_idcategoria_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.categoria_idcategoria_seq', 25, true);
+SELECT pg_catalog.setval('public.categorias_idcategoria_seq', 9, true);
 
 
 --
 -- Name: chats_idchat_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.chats_idchat_seq', 25, true);
+SELECT pg_catalog.setval('public.chats_idchat_seq', 26, true);
 
 
 --
 -- Name: comentarios_idcomentario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.comentarios_idcomentario_seq', 5, true);
+SELECT pg_catalog.setval('public.comentarios_idcomentario_seq', 6, true);
 
 
 --
@@ -986,14 +1043,14 @@ SELECT pg_catalog.setval('public.favoritos_idfavorito_seq', 1, false);
 -- Name: grupos_idgrupo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.grupos_idgrupo_seq', 10, true);
+SELECT pg_catalog.setval('public.grupos_idgrupo_seq', 12, true);
 
 
 --
 -- Name: historias_idhistoria_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.historias_idhistoria_seq', 10, true);
+SELECT pg_catalog.setval('public.historias_idhistoria_seq', 12, true);
 
 
 --
@@ -1053,10 +1110,48 @@ SELECT pg_catalog.setval('public.productoguardado_idpguardado_seq', 25, true);
 
 
 --
+-- Name: productos_idproducto_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.productos_idproducto_seq', 1, false);
+
+
+--
 -- Name: usuario_idusuario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.usuario_idusuario_seq', 25, true);
+
+
+--
+-- Name: usuario_idusuario_seq1; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.usuario_idusuario_seq1', 1, false);
+
+
+--
+-- Name: categorias PK_b80cdb9e9701d200f917c8b2395; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categorias
+    ADD CONSTRAINT "PK_b80cdb9e9701d200f917c8b2395" PRIMARY KEY (idcategoria);
+
+
+--
+-- Name: usuario PK_e85aae916115e08db303691af54; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario
+    ADD CONSTRAINT "PK_e85aae916115e08db303691af54" PRIMARY KEY (idusuario);
+
+
+--
+-- Name: usuario UQ_2863682842e688ca198eb25c124; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario
+    ADD CONSTRAINT "UQ_2863682842e688ca198eb25c124" UNIQUE (email);
 
 
 --
@@ -1065,14 +1160,6 @@ SELECT pg_catalog.setval('public.usuario_idusuario_seq', 25, true);
 
 ALTER TABLE ONLY public.amigos
     ADD CONSTRAINT amigos_pkey PRIMARY KEY (idamigo);
-
-
---
--- Name: categoria categoria_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.categoria
-    ADD CONSTRAINT categoria_pkey PRIMARY KEY (idcategoria);
 
 
 --
@@ -1164,10 +1251,10 @@ ALTER TABLE ONLY public.posts
 
 
 --
--- Name: producto producto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: productos producto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.producto
+ALTER TABLE ONLY public.productos
     ADD CONSTRAINT producto_pkey PRIMARY KEY (idproducto);
 
 
@@ -1180,43 +1267,19 @@ ALTER TABLE ONLY public.productoguardado
 
 
 --
--- Name: usuario usuario_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: usuarios usuario_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.usuario
+ALTER TABLE ONLY public.usuarios
     ADD CONSTRAINT usuario_email_key UNIQUE (email);
 
 
 --
--- Name: usuario usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: usuarios usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.usuario
+ALTER TABLE ONLY public.usuarios
     ADD CONSTRAINT usuario_pkey PRIMARY KEY (idusuario);
-
-
---
--- Name: amigos amigos_idusuario1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.amigos
-    ADD CONSTRAINT amigos_idusuario1_fkey FOREIGN KEY (idusuario1) REFERENCES public.usuario(idusuario) ON DELETE CASCADE;
-
-
---
--- Name: amigos amigos_idusuario2_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.amigos
-    ADD CONSTRAINT amigos_idusuario2_fkey FOREIGN KEY (idusuario2) REFERENCES public.usuario(idusuario) ON DELETE CASCADE;
-
-
---
--- Name: chats chats_idusuario1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.chats
-    ADD CONSTRAINT chats_idusuario1_fkey FOREIGN KEY (idusuario1) REFERENCES public.usuario(idusuario) ON DELETE CASCADE;
 
 
 --

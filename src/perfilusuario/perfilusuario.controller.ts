@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { PerfilusuarioService } from './perfilusuario.service';
 import { CreatePerfilusuarioDto } from './dto/create-perfilusuario.dto';
 import { UpdatePerfilusuarioDto } from './dto/update-perfilusuario.dto';
@@ -17,18 +17,23 @@ export class PerfilusuarioController {
     return this.perfilusuarioService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+@Get(':idperfilusuario')
+  findOne(@Param('idperfilusuario') id: string) {
     return this.perfilusuarioService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePerfilusuarioDto: UpdatePerfilusuarioDto) {
+  @Patch(':idperfilusuario')
+  update(@Param('idperfilusuario') id: string, @Body() updatePerfilusuarioDto: UpdatePerfilusuarioDto) {
     return this.perfilusuarioService.update(+id, updatePerfilusuarioDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(':idperfilusuario')
+  remove(@Param('idperfilusuario') id: string) {
     return this.perfilusuarioService.remove(+id);
+  }
+
+  @Put(':idperfilusuario')
+  replace(@Param('idperfilusuario') id: string, @Body() updatePerfilusuarioDto: UpdatePerfilusuarioDto) {
+    return this.perfilusuarioService.update(+id, updatePerfilusuarioDto);
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { ComentariosService } from './comentarios.service';
 import { CreateComentarioDto } from './dto/create-comentario.dto';
 import { UpdateComentarioDto } from './dto/update-comentario.dto';
@@ -17,18 +17,23 @@ export class ComentariosController {
     return this.comentariosService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+@Get(':idcomentario')
+  findOne(@Param('idcomentario') id: string) {
     return this.comentariosService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateComentarioDto: UpdateComentarioDto) {
+  @Patch(':idcomentario')
+  update(@Param('idcomentario') id: string, @Body() updateComentarioDto: UpdateComentarioDto) {
     return this.comentariosService.update(+id, updateComentarioDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(':idcomentario')
+  remove(@Param('idcomentario') id: string) {
     return this.comentariosService.remove(+id);
+  }
+
+  @Put(':idcomentario')
+  replace(@Param('idcomentario') id: string, @Body() updateComentarioDto: UpdateComentarioDto) {
+    return this.comentariosService.update(+id, updateComentarioDto);
   }
 }

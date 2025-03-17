@@ -1,26 +1,47 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePerfilusuarioDto } from './dto/create-perfilusuario.dto';
 import { UpdatePerfilusuarioDto } from './dto/update-perfilusuario.dto';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { NotFoundException } from '@nestjs/common';
+import { Perfilusuario } from './entities/perfilusuario.entity';
 
 @Injectable()
 export class PerfilusuarioService {
-  create(createPerfilusuarioDto: CreatePerfilusuarioDto) {
-    return 'This action adds a new perfilusuario';
-  }
-
-  findAll() {
-    return `This action returns all perfilusuario`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} perfilusuario`;
-  }
-
-  update(id: number, updatePerfilusuarioDto: UpdatePerfilusuarioDto) {
-    return `This action updates a #${id} perfilusuario`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} perfilusuario`;
-  }
+     constructor(
+       @InjectRepository(Perfilusuario)
+       private readonly perfilusuariosRepository: Repository<Perfilusuario>) { }
+  
+     async create(createPerfilusuarioDto: CreatePerfilusuarioDto) {
+       const perfilusuario = this.perfilusuariosRepository.create(createPerfilusuarioDto);
+   
+       return await this.perfilusuariosRepository.save(perfilusuario);
+     }
+   
+     async findAll() {
+       return  await this.perfilusuariosRepository.find();
+     }
+   
+     
+     async findOne(idperfilusuario: number) {
+       return await this.perfilusuariosRepository.findOne({ where: { idperfilusuario } });
+     }
+   
+     async update(id: number, updatePerfilusuarioDto: UpdatePerfilusuarioDto) {
+       const perfilusuario = await this.findOne(id);
+       if (!perfilusuario) {
+         throw new NotFoundException('Perfilusuario not found');
+       }
+       Object.assign(perfilusuario, updatePerfilusuarioDto);
+       return await this.perfilusuariosRepository.save(perfilusuario);
+     }
+   
+     async remove(id: number) {
+       const perfilusuario = await this.findOne(id);
+       if (!perfilusuario) {
+         throw new NotFoundException('Perfilusuario not found');
+       }
+   
+       return await this.perfilusuariosRepository.remove(perfilusuario);
+     }
 }

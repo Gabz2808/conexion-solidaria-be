@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { MensajesprivadosService } from './mensajesprivados.service';
 import { CreateMensajesprivadoDto } from './dto/create-mensajesprivado.dto';
 import { UpdateMensajesprivadoDto } from './dto/update-mensajesprivado.dto';
@@ -17,18 +17,23 @@ export class MensajesprivadosController {
     return this.mensajesprivadosService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+@Get(':idmensajeprivado')
+  findOne(@Param('idmensajeprivado') id: string) {
     return this.mensajesprivadosService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMensajesprivadoDto: UpdateMensajesprivadoDto) {
-    return this.mensajesprivadosService.update(+id, updateMensajesprivadoDto);
+  @Patch(':idmensajeprivado')
+  update(@Param('idmensajeprivado') id: string, @Body() updateMensajeprivadoDto: UpdateMensajesprivadoDto) {
+    return this.mensajesprivadosService.update(+id, updateMensajeprivadoDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(':idmensajeprivado')
+  remove(@Param('idmensajeprivado') id: string) {
     return this.mensajesprivadosService.remove(+id);
+  }
+
+  @Put(':idmensajeprivado')
+  replace(@Param('idmensajeprivado') id: string, @Body() updateMensajeprivadoDto: UpdateMensajesprivadoDto) {
+    return this.mensajesprivadosService.update(+id, updateMensajeprivadoDto);
   }
 }

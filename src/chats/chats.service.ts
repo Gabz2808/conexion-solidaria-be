@@ -1,26 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { NotFoundException } from '@nestjs/common';
+import { Chat } from './entities/chat.entity';
 
 @Injectable()
 export class ChatsService {
-  create(createChatDto: CreateChatDto) {
-    return 'This action adds a new chat';
+  constructor(
+    @InjectRepository(Chat)
+    private readonly chatsRepository: Repository<Chat>  ) {}
+  async create(createChatDto: CreateChatDto) {
+    const chat = this.chatsRepository.create(createChatDto);
+
+    return await this.chatsRepository.save(chat);
   }
 
-  findAll() {
-    return `This action returns all chats`;
+  async findAll() {
+    return  await this.chatsRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} chat`;
+  
+  async findOne(idchat: number) {
+    return await this.chatsRepository.findOne({ where: { idchat } });
   }
 
-  update(id: number, updateChatDto: UpdateChatDto) {
-    return `This action updates a #${id} chat`;
+  async update(id: number, updateChatDto: UpdateChatDto) {
+    const chat = await this.findOne(id);
+    if (!chat) {
+      throw new NotFoundException('Chat not found');
+    }
+    Object.assign(chat, updateChatDto);
+    return await this.chatsRepository.save(chat);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} chat`;
+  async remove(id: number) {
+    const chat = await this.findOne(id);
+    if (!chat) {
+      throw new NotFoundException('Chat not found');
+    }
+
+    return await this.chatsRepository.remove(chat);
   }
 }

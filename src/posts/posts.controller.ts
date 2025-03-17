@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -17,18 +17,23 @@ export class PostsController {
     return this.postsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+@Get(':idpost')
+  findOne(@Param('idpost') id: string) {
     return this.postsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(+id, updatePostDto);
+  @Patch(':idpost')
+  update(@Param('idpost') id: string, @Body() updatePostsDto: UpdatePostDto) {
+    return this.postsService.update(+id, updatePostsDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(':idpost')
+  remove(@Param('idpost') id: string) {
     return this.postsService.remove(+id);
+  }
+
+  @Put(':idpost')
+  replace(@Param('idpost') id: string, @Body() updatePostsDto: UpdatePostDto) {
+    return this.postsService.update(+id, updatePostsDto);
   }
 }
