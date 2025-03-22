@@ -4,6 +4,10 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Repository } from 'typeorm';
 import { Usuario } from './entities/usuario.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
+
+const saltRounds = 10;
+
 
 @Injectable()
 export class UsuariosService {
@@ -15,10 +19,20 @@ export class UsuariosService {
 
     async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
         try {
-            const usuario = this.usuariosRepository.create(createUsuarioDto);
+            // Encriptar la contraseña
+            const hashedPassword = await bcrypt.hash(createUsuarioDto.password, saltRounds);
+            
+            // Crear el usuario con la contraseña encriptada
+    const usuario = this.usuariosRepository.create({
+      ...createUsuarioDto,
+      estado: 'Activo',
+      rol: 'Usuario',
+      fecharegistro: new Date(),
+      password: hashedPassword, // Almacenamos la contraseña encriptada
+    });
             return await this.usuariosRepository.save(usuario);
         } catch (error) {
-            // Log the error or handle it appropriately
+            // Manejo de errores
             throw error;
         }
     }
@@ -34,6 +48,14 @@ export class UsuariosService {
         }
         return usuario;
     }
+async findByEmail(email: string): Promise<Usuario> {
+    const usuario = await this.usuariosRepository.findOneBy({ email });
+    if (!usuario) {
+        throw new NotFoundException(`Usuario con email ${email} no encontrado`);
+    }
+    return usuario;
+}
+
 
     async update(idusuario: number, updateUsuarioDto: UpdateUsuarioDto): Promise<Usuario> {
         const usuario = await this.findOne(idusuario); // Reuse findOne for validation

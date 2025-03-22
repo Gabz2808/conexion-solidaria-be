@@ -1,29 +1,28 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
-@Entity({ name: 'usuario' }) // Corregido el nombre de la tabla
+@Entity('usuarios')
 export class Usuario {
+  @PrimaryGeneratedColumn()
+  idusuario: number;
 
-    @PrimaryGeneratedColumn()
-    idusuario: number; // Corregido el nombre de la columna
+  @Column({ length: 100 })
+  nombre: string;
 
-    @Column({ type: 'varchar', length: 100 }) // Corregido el tipo de dato
-    nombre: string;
+  @Column({ length: 100 })
+  apellido: string;
 
-    @Column({ type: 'varchar', length: 100 })
-    apellido: string; // Agregada la columna apellido
+  @Column({ unique: true, length: 255 })
+  email: string;
 
-    @Column({ type: 'varchar', length: 255, unique: true }) // Corregido el tipo de dato y unique
-    email: string;
+  @Column()
+  password: string;
 
-    @Column({ type: 'text' })
-    password: string;
+  @CreateDateColumn({ type: 'timestamp' })
+  fecharegistro: Date;
 
-    @Column({ type: 'timestamp without time zone' }) // Corregido el tipo de dato
-    fecharegistro: Date;
+  @Column({ length: 50, nullable: true })
+  rol: string;
 
-    @Column({ type: 'varchar', length: 50, nullable: true }) // Corregido el tipo de dato y nullable
-    rol: string;
-
-    @Column({ type: 'varchar', length: 50, nullable: true }) // Corregido el tipo de dato y nullable
-    estado: string;
+  @Column({ length: 50, nullable: true })
+  estado: string;
 }

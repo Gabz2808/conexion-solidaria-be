@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { config, cwd } from 'process';
 import { join } from 'path';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { AmigosModule } from './amigos/amigos.module';
@@ -21,6 +20,8 @@ import { PostsModule } from './posts/posts.module';
 import { ProductoModule } from './producto/producto.module';
 import { ProductoguardadoModule } from './productoguardado/productoguardado.module';
 import { CategoriasModule } from './categorias/categorias.module';
+import { AuthModule } from './auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -37,8 +38,26 @@ import { CategoriasModule } from './categorias/categorias.module';
         database: ConfigService.get('DB_NAME'),
         entities: [join(process.cwd(), 'dist/**/*.entity.js')],
         synchronize: true,
-      })
-    }), UsuariosModule, AmigosModule, ChatsModule, ComentariosModule, FavoritosModule, GruposModule, HistoriasModule, LikesModule, MensajesprivadosModule, MiembrosgrupoModule, NotificacionesModule, PerfilusuarioModule, PostsModule, ProductoModule, ProductoguardadoModule, CategoriasModule,
+      }),
+    }),
+    // Otros módulos de tu aplicación
+    UsuariosModule,
+    AmigosModule,
+    ChatsModule,
+    ComentariosModule,
+    FavoritosModule,
+    GruposModule,
+    HistoriasModule,
+    LikesModule,
+    MensajesprivadosModule,
+    MiembrosgrupoModule,
+    NotificacionesModule,
+    PerfilusuarioModule,
+    PostsModule,
+    ProductoModule,
+    ProductoguardadoModule,
+    CategoriasModule,
+    AuthModule, // Asegúrate de que AuthModule ya maneja los controladores y servicios de autenticación
   ],
   controllers: [AppController],
   providers: [AppService],
