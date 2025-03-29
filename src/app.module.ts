@@ -22,6 +22,8 @@ import { ProductoguardadoModule } from './productoguardado/productoguardado.modu
 import { CategoriasModule } from './categorias/categorias.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { VPostsModule } from './views/v-posts/v-posts.module';
+import { VproductosModule } from './views/vproductos/vproductos.module';
 
 @Module({
   imports: [
@@ -37,7 +39,7 @@ import { JwtModule } from '@nestjs/jwt';
         password: ConfigService.get('DB_PASSWORD'),
         database: ConfigService.get('DB_NAME'),
         entities: [join(process.cwd(), 'dist/**/*.entity.js')],
-        synchronize: true,
+        synchronize: false,
       }),
     }),
     // Otros módulos de tu aplicación
@@ -57,7 +59,9 @@ import { JwtModule } from '@nestjs/jwt';
     ProductoModule,
     ProductoguardadoModule,
     CategoriasModule,
-    AuthModule, // Asegúrate de que AuthModule ya maneja los controladores y servicios de autenticación
+    AuthModule,
+    VPostsModule,
+    VproductosModule, 
   ],
   controllers: [AppController],
   providers: [AppService],
