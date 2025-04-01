@@ -23,8 +23,12 @@ export class PerfilusuarioService {
      }
    
      
-     async findOne(idperfilusuario: number) {
-       return await this.perfilusuariosRepository.findOne({ where: { idperfilusuario } });
+     async findOne(idperfilusuario: number) : Promise<Perfilusuario> {
+       const perfilusuario = await this.perfilusuariosRepository.findOneBy({ idperfilusuario });
+        if (!perfilusuario) {
+          throw new NotFoundException('Perfilusuario not found');
+        }
+       return perfilusuario;
      }
    
      async update(id: number, updatePerfilusuarioDto: UpdatePerfilusuarioDto) {

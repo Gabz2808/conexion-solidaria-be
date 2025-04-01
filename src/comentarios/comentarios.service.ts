@@ -11,12 +11,16 @@ export class ComentariosService {
   constructor(
     @InjectRepository(Comentario)
     private readonly comentariosRepository: Repository<Comentario>  ) {}
-  async create(createComentarioDto: CreateComentarioDto) {
-    const comentario = this.comentariosRepository.create(createComentarioDto);
+async create(createComentarioDto: CreateComentarioDto) {
+  const comentario = this.comentariosRepository.create(createComentarioDto);
+  await this.comentariosRepository.save(comentario);
 
-    return await this.comentariosRepository.save(comentario);
-  }
-
+  // Devuelve el comentario con los datos del usuario
+  return this.comentariosRepository.findOne({
+    where: { idcomentario: comentario.idcomentario },
+    relations: ["usuario"], // Incluye la relación con el usuario
+  });
+}
   async findAll() {
     return  await this.comentariosRepository.find();
   }

@@ -44,23 +44,27 @@ export class PerfilusuarioController {
     }
   }
 
-  @Get(':idperfilusuario')
-  findOne(@Param('idperfilusuario') id: string) {
-    return this.perfilusuarioService.findOne(+id);
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    const perfil = await this.perfilusuarioService.findOne(+id);
+    if (!perfil) {
+      throw new UnauthorizedException('Perfil no encontrado');
+    }
+    return perfil;
   }
 
-  @Patch(':idperfilusuario')
-  update(@Param('idperfilusuario') id: string, @Body() updatePerfilusuarioDto: UpdatePerfilusuarioDto) {
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updatePerfilusuarioDto: UpdatePerfilusuarioDto) {
     return this.perfilusuarioService.update(+id, updatePerfilusuarioDto);
   }
 
-  @Delete(':idperfilusuario')
-  remove(@Param('idperfilusuario') id: string) {
+  @Delete(':id')
+  remove(@Param('id') id: string) {
     return this.perfilusuarioService.remove(+id);
   }
 
-  @Put(':idperfilusuario')
-  replace(@Param('idperfilusuario') id: string, @Body() updatePerfilusuarioDto: UpdatePerfilusuarioDto) {
+  @Put(':id')
+  replace(@Param('id') id: string, @Body() updatePerfilusuarioDto: UpdatePerfilusuarioDto) {
     return this.perfilusuarioService.update(+id, updatePerfilusuarioDto);
   }
 }

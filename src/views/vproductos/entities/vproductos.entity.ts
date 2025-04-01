@@ -6,6 +6,9 @@ export class VproductosEntity {
   idproducto: number;
 
   @ViewColumn()
+  idvendedor: number;
+  
+  @ViewColumn()
   nombre: string;
 
   @ViewColumn()

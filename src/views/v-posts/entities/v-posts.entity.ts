@@ -3,20 +3,34 @@ import { ViewEntity, ViewColumn } from "typeorm";
 @ViewEntity({ name: "v_post" })
 export class VPostsEntity {
   @ViewColumn()
-  idposts: number;
+  idpost: number;
+
+  @ViewColumn()
+  titulo: string;
 
   @ViewColumn()
   contenido: string;
 
   @ViewColumn()
-  fechacreacion: Date;
+  fecha_post: Date;
 
   @ViewColumn()
   imagen: string;
 
   @ViewColumn()
-  author_name: string;
+  idautor: number;
 
   @ViewColumn()
-  urlusuario: string;
+  autor: string;
+
+  @ViewColumn()
+  cantidad_likes: number;
+
+  @ViewColumn()
+  comentarios: Array<{
+    idcomentario: number;
+    contenido: string;
+    fecha_comentario: string;
+    autor_comentario: string;
+  }>; // Ahora es un array de objetos JSON
 }

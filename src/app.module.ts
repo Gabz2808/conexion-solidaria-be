@@ -24,6 +24,8 @@ import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { VPostsModule } from './views/v-posts/v-posts.module';
 import { VproductosModule } from './views/vproductos/vproductos.module';
+import { VgruposModule } from './views/vgrupos/vgrupos.module';
+import { VusuariosModule } from './views/vusuarios/vusuarios.module';
 
 @Module({
   imports: [
@@ -62,6 +64,8 @@ import { VproductosModule } from './views/vproductos/vproductos.module';
     AuthModule,
     VPostsModule,
     VproductosModule, 
+    VgruposModule,
+    VusuariosModule
   ],
   controllers: [AppController],
   providers: [AppService],

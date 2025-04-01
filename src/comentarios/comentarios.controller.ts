@@ -8,7 +8,7 @@ export class ComentariosController {
   constructor(private readonly comentariosService: ComentariosService) {}
 
   @Post()
-  create(@Body() createComentarioDto: CreateComentarioDto) {
+  async create(@Body() createComentarioDto: CreateComentarioDto) {
     return this.comentariosService.create(createComentarioDto);
   }
 
