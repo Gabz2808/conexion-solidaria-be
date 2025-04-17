@@ -26,6 +26,7 @@ import { VPostsModule } from './views/v-posts/v-posts.module';
 import { VproductosModule } from './views/vproductos/vproductos.module';
 import { VgruposModule } from './views/vgrupos/vgrupos.module';
 import { VusuariosModule } from './views/vusuarios/vusuarios.module';
+import { VmiembrosgruposModule } from './views/vmiembrosgrupos/vmiembrosgrupos.module';
 
 @Module({
   imports: [
@@ -65,7 +66,8 @@ import { VusuariosModule } from './views/vusuarios/vusuarios.module';
     VPostsModule,
     VproductosModule, 
     VgruposModule,
-    VusuariosModule
+    VusuariosModule,
+    VmiembrosgruposModule
   ],
   controllers: [AppController],
   providers: [AppService],
