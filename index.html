@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload Image</title>
+</head>
+<body>
+  <h1>Subir Imagen</h1>
+  <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="image" id="imageInput" required>
+    <button type="submit">Subir Imagen</button>
+  </form>
+  <div id="response"></div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const responseDiv = document.getElementById('response');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault(); // Evita que el formulario recargue la página
+
+      const formData = new FormData();
+      const fileInput = document.getElementById('imageInput');
+      formData.append('image', fileInput.files[0]);
+
+      try {
+        const response = await fetch('http://localhost:3000/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al subir la imagen');
+        }
+
+        const result = await response.json();
+        responseDiv.innerHTML = `
+          <p>${result.message}</p>
+          <p>URL de la imagen: <a href="${result.url}" target="_blank">${result.url}</a></p>
+          <img src="${result.url}" alt="Imagen subida" style="max-width: 300px;">
+        `;
+      } catch (error) {
+        responseDiv.innerHTML = `<p style="color: red;">${error.message}</p>`;
+      }
+    });
+  </script>
+</body>
+</html>
