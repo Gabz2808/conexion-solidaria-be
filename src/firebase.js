@@ -9,7 +9,7 @@ require('dotenv').config()
 const app = express();
 const port = process.env.PORT || 3000;
 
-const serviceAccount = require('../conexion-solidaria-8684b-firebase-adminsdk-fbsvc-6108339c68.json');
+const serviceAccount = require('../conexion-solidaria-private-key-firebasejson');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     storageBucket: 'conexion-solidaria-8684b.firebasestorage.app',

@@ -22,7 +22,10 @@ export class VPostsEntity {
 
   @ViewColumn()
   autor: string;
-
+  
+  @ViewColumn()
+  urlusuario: string;
+  
   @ViewColumn()
   cantidad_likes: number;
 
