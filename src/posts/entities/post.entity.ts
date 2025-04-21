@@ -1,24 +1,19 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({name: 'posts'})
-export class Post { 
+@Entity('posts')
+export class Post {
   @PrimaryGeneratedColumn()
   idposts: number;
 
-  @Column({ type:  'varchar', length: 255})
-  titulo: string;
-  
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   contenido: string;
 
   @Column({ type: 'int' })
   idusuario: number;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   fechacreacion: Date;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   imagen: string;
-
-  
 }

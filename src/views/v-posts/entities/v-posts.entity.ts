@@ -5,8 +5,6 @@ export class VPostsEntity {
   @ViewColumn()
   idpost: number;
 
-  @ViewColumn()
-  titulo: string;
 
   @ViewColumn()
   contenido: string;
