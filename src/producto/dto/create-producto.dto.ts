@@ -1,12 +1,26 @@
+import { IsNotEmpty, IsString } from 'class-validator';
+
 export class CreateProductoDto {
 
-  idproducto: number;
+
+  @IsNotEmpty()
+  @IsString()
   nombre: string;
-  descripcion: string;
+
+  @IsString()
+  descripcion?: string;
+
+  @IsNotEmpty()
   precio: number;
+
+  @IsNotEmpty()
   idcategoria: number;
-  imagen: string;
+
+  @IsString()
+  imagen?: string;
+
+  @IsNotEmpty()
   idusuario: number;
-  fechacreacion: Date;
+
   
 }

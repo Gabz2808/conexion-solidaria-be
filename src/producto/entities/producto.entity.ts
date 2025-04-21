@@ -1,30 +1,28 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({name: 'productos'})
-export class Producto { 
- 
+@Entity('productos')
+export class Producto {
   @PrimaryGeneratedColumn()
   idproducto: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ nullable: false })
   nombre: string;
 
-  @Column({ type: 'text' })
+  @Column({ nullable: true })
   descripcion: string;
 
-  @Column({ type: 'numeric', precision: 10, scale: 2 })
+  @Column({ type: 'decimal', nullable: false })
   precio: number;
 
-  @Column({ type: 'int' })
+  @Column({ nullable: false })
   idcategoria: number;
 
-  @Column({ type: 'text' })
+  @Column({ nullable: true })
   imagen: string;
 
-  @Column({ type: 'int' })
+  @Column({ nullable: false })
   idusuario: number;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   fechacreacion: Date;
-  
 }
