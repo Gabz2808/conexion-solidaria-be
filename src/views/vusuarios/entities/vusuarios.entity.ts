@@ -40,4 +40,13 @@
     
     @ViewColumn()
     estado: string;
+
+    @ViewColumn()
+    productos_totales: number;
+
+    @ViewColumn()
+    posts_totales: number;
+
+    @ViewColumn()
+    amigos_totales: number;
   }

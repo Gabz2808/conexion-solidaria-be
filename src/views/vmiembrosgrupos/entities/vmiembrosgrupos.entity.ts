@@ -19,4 +19,5 @@ export class VMiembrosGrupos {
 
   @ViewColumn()
   nombre: string;
+  
 }

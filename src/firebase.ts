@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const serviceAccount: ServiceAccount = require('../conexion-solidaria-8684b-firebase-adminsdk-fbsvc-f70d9423c9.json');
+const serviceAccount: ServiceAccount = require('../conexion-solidaria-8684b-firebase-adminsdk-fbsvc-95d358f039.json');
 
 // Inicializar Firebase Admin SDK
 admin.initializeApp({

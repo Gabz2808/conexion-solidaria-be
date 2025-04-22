@@ -18,8 +18,12 @@ export class ChatsService {
   }
 
   async findAll() {
-    return  await this.chatsRepository.find();
+    return await this.chatsRepository.find({
+      relations: ['usuario1', 'usuario2'],
+      order: { fechacreacion: 'DESC' },
+    });
   }
+  
 
   
   async findOne(idchat: number) {

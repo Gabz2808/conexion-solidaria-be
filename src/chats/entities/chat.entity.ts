@@ -1,17 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+// chat.entity.ts
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Usuario } from '../../usuarios/entities/usuario.entity';
 
-@Entity({name: 'chats'})
-export class Chat { 
+@Entity('chats')
+export class Chat {
   @PrimaryGeneratedColumn()
   idchat: number;
-  
-  @Column({ type: 'int' })
-  idusuario1: number;
 
-  @Column({ type: 'int' })
-  idusuario2: number;
-  
+  @ManyToOne(() => Usuario)
+  @JoinColumn({ name: 'idusuario1' })
+  usuario1: Usuario;
+
+  @ManyToOne(() => Usuario)
+  @JoinColumn({ name: 'idusuario2' })
+  usuario2: Usuario;
+
   @Column({ type: 'timestamp' })
   fechacreacion: Date;
-
 }
