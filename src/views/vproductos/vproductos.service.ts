@@ -10,7 +10,13 @@ export class VproductosService {
       private readonly productoRepository: Repository<VproductosEntity>,
     ) {}
   
-    async getAllPosts(): Promise<VproductosEntity[]> {
+    async getAllProductos(): Promise<VproductosEntity[]> {
       return this.productoRepository.find();
     }
-}
+
+    async getProductosByidvendedor(idvendedor: number): Promise<VproductosEntity[]> {
+          return this.productoRepository.find({
+            where: { idvendedor: idvendedor}
+          });
+        }
+    }
