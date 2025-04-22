@@ -1,17 +1,27 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  CreateDateColumn,
+} from "typeorm";
+import { Usuario } from "../../usuarios/entities/usuario.entity";
+import { Post } from "../../posts/entities/post.entity";
 
-@Entity({name: 'likes'})
-export class Like { 
+@Entity({ name: "likes" })
+export class Like {
   @PrimaryGeneratedColumn()
   idlike: number;
 
-  @Column({ type: 'int' })
-  idrelacion: number;
+  @ManyToOne(() => Post, { eager: true })
+  @JoinColumn({ name: "idpost" })
+  post: Post;
 
-  @Column({ type: 'int' })
-  idusuario: number;
+  @ManyToOne(() => Usuario, { eager: true })
+  @JoinColumn({ name: "idusuario" })
+  usuario: Usuario;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   fechacreacion: Date;
-
 }

@@ -13,4 +13,11 @@ export class VmiembrosgruposService {
   async getAllMiembrosGrupos(): Promise<VMiembrosGrupos[]> {
     return this.vMiembrosgruposRepository.find();
   }
+
+  async getMiembrosGruposByIdUsuario(idusuario: number): Promise<VMiembrosGrupos[]> {
+    return this.vMiembrosgruposRepository.find({
+      where: { idusuario }
+        });
+  }
+
 }

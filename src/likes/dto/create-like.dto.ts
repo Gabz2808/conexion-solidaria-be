@@ -1,8 +1,5 @@
+// dto/create-like.dto.ts
 export class CreateLikeDto {
-
-  idlike: number;
-  idrelacion: number;
+  idpost: number;
   idusuario: number;
-  fechaCreacion: Date;
-  
 }
