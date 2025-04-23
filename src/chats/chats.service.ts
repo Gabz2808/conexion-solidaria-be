@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Chat } from './entities/chat.entity';
@@ -15,6 +15,15 @@ export class ChatsService {
     const chat = this.chatsRepository.create(createChatDto);
 
     return await this.chatsRepository.save(chat);
+  }
+
+
+  async findByUser(usuario1: number) {
+    return await this.chatsRepository.find({
+      where: [{ usuario1: Equal(usuario1) }, { usuario2: Equal(usuario1) }],
+      relations: ['usuario1', 'usuario2'],
+      order: { fechacreacion: 'DESC' },
+    });
   }
 
   async findAll() {
@@ -47,4 +56,6 @@ export class ChatsService {
 
     return await this.chatsRepository.remove(chat);
   }
+
+
 }

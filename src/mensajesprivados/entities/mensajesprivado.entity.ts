@@ -1,21 +1,23 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Chat } from '../../chats/entities/chat.entity'; // Asumiendo que la entidad 'Chat' está definida correctamente
+import { Usuario } from '../../usuarios/entities/usuario.entity'; // Asumiendo que la entidad 'Usuario' está definida correctamente
 
-@Entity({name: 'mensajesprivados'})
-export class Mensajesprivado { 
-  
+@Entity('mensajesprivados')
+export class MensajePrivado {
   @PrimaryGeneratedColumn()
   idmprivado: number;
 
-  @Column({ type: 'int' })
-  idchat: number;
+  @ManyToOne(() => Chat, { eager: true })
+  @JoinColumn({ name: 'idchat' })
+  chat: Chat;
 
-  @Column({ type: 'int' })
-  idusuario: number;
+  @ManyToOne(() => Usuario)
+  @JoinColumn({ name: 'idusuario' })
+  usuario: Usuario;
 
-  @Column({ type: 'text' })
+  @Column('text')
   contenido: string;
 
-  @Column({ type: 'timestamp' })
+  @Column('timestamp')
   fechacreacion: Date;
-  
 }

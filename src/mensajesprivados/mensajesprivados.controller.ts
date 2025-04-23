@@ -1,39 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
-import { MensajesprivadosService } from './mensajesprivados.service';
-import { CreateMensajesprivadoDto } from './dto/create-mensajesprivado.dto';
-import { UpdateMensajesprivadoDto } from './dto/update-mensajesprivado.dto';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { MensajesPrivadosService } from './mensajesprivados.service';
 
-@Controller('mensajesprivados')
-export class MensajesprivadosController {
-  constructor(private readonly mensajesprivadosService: MensajesprivadosService) {}
+@Controller('mensajes')
+export class MensajesPrivadosController {
+  constructor(private readonly mensajesService: MensajesPrivadosService) {}
 
-  @Post()
-  create(@Body() createMensajesprivadoDto: CreateMensajesprivadoDto) {
-    return this.mensajesprivadosService.create(createMensajesprivadoDto);
+  @Post('sendMessage')
+  async enviarMensaje(@Body() body: { chatId: number; mensaje: string; usuarioId: number }) {
+    return this.mensajesService.enviarMensaje(body);
   }
 
-  @Get()
-  findAll() {
-    return this.mensajesprivadosService.findAll();
-  }
-
-@Get(':idmensajeprivado')
-  findOne(@Param('idmensajeprivado') id: string) {
-    return this.mensajesprivadosService.findOne(+id);
-  }
-
-  @Patch(':idmensajeprivado')
-  update(@Param('idmensajeprivado') id: string, @Body() updateMensajeprivadoDto: UpdateMensajesprivadoDto) {
-    return this.mensajesprivadosService.update(+id, updateMensajeprivadoDto);
-  }
-
-  @Delete(':idmensajeprivado')
-  remove(@Param('idmensajeprivado') id: string) {
-    return this.mensajesprivadosService.remove(+id);
-  }
-
-  @Put(':idmensajeprivado')
-  replace(@Param('idmensajeprivado') id: string, @Body() updateMensajeprivadoDto: UpdateMensajesprivadoDto) {
-    return this.mensajesprivadosService.update(+id, updateMensajeprivadoDto);
+  @Get('chat/:chatId')
+  async obtenerMensajes(@Param('chatId') chatId: number) {
+    return this.mensajesService.obtenerMensajes(chatId);
   }
 }

@@ -1,6 +1,7 @@
 // chat.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Usuario } from '../../usuarios/entities/usuario.entity';
+import { MensajePrivado } from '../../mensajesprivados/entities/mensajesprivado.entity'; // Importa la entidad Mensaje
 
 @Entity('chats')
 export class Chat {
@@ -17,4 +18,8 @@ export class Chat {
 
   @Column({ type: 'timestamp' })
   fechacreacion: Date;
+
+  // Relación con los mensajes
+  @OneToMany(() => MensajePrivado, (mensaje) => mensaje.chat)
+  mensajes: MensajePrivado[];
 }

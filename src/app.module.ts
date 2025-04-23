@@ -12,7 +12,7 @@ import { FavoritosModule } from './favoritos/favoritos.module';
 import { GruposModule } from './grupos/grupos.module';
 import { HistoriasModule } from './historias/historias.module';
 import { LikesModule } from './likes/likes.module';
-import { MensajesprivadosModule } from './mensajesprivados/mensajesprivados.module';
+import { MensajesPrivadosModule } from './mensajesprivados/mensajesprivados.module';
 import { MiembrosgrupoModule } from './miembrosgrupo/miembrosgrupo.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
 import { PerfilusuarioModule } from './perfilusuario/perfilusuario.module';
@@ -54,7 +54,7 @@ import { VmiembrosgruposModule } from './views/vmiembrosgrupos/vmiembrosgrupos.m
     GruposModule,
     HistoriasModule,
     LikesModule,
-    MensajesprivadosModule,
+    MensajesPrivadosModule,
     MiembrosgrupoModule,
     NotificacionesModule,
     PerfilusuarioModule,
