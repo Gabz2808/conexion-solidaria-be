@@ -26,5 +26,8 @@ export class VproductosEntity {
   @ViewColumn()
   fechacreacion: Date;
 
+  @ViewColumn()
+  imagen: string;
+
 }
 
